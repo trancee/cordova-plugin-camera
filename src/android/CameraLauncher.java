@@ -411,7 +411,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 return;
             }
 
-            if (rotate != 0 && this.correctOrientation) {
+            if (/*rotate != 0 && */this.correctOrientation) {	// make sure it always gets rotated to correct faulty EXIF metadata.
                 bitmap = getRotatedBitmap(rotate, bitmap, exif);
             }
 
@@ -450,7 +450,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                     bitmap = getScaledBitmap(FileHelper.stripFileProtocol(imageUri.toString()));
                 }
 
-                if (rotate != 0 && this.correctOrientation) {
+                if (/*rotate != 0 && */this.correctOrientation) {	// make sure it always gets rotated to correct faulty EXIF metadata.
                     bitmap = getRotatedBitmap(rotate, bitmap, exif);
                 }
 
@@ -583,7 +583,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
 
                 if (this.correctOrientation) {
                     rotate = getImageOrientation(uri);
-                    if (rotate != 0) {
+                    // if (rotate != 0) {	// make sure it always gets rotated to correct faulty EXIF metadata.
                         Matrix matrix = new Matrix();
                         matrix.setRotate(rotate);
                         try {
@@ -592,7 +592,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
                         } catch (OutOfMemoryError oom) {
                             this.orientationCorrected = false;
                         }
-                    }
+                    // }
                 }
 
                 // If sending base64 image back
