@@ -411,7 +411,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 return;
             }
 
-            if (/*rotate != 0 && */this.correctOrientation) {	// make sure it always gets rotated to correct faulty EXIF metadata.
+            if (rotate != 0 && this.correctOrientation) {
                 bitmap = getRotatedBitmap(rotate, bitmap, exif);
             }
 
@@ -450,7 +450,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                     bitmap = getScaledBitmap(FileHelper.stripFileProtocol(imageUri.toString()));
                 }
 
-                if (/*rotate != 0 && */this.correctOrientation) {	// make sure it always gets rotated to correct faulty EXIF metadata.
+                if (rotate != 0 && this.correctOrientation) {
                     bitmap = getRotatedBitmap(rotate, bitmap, exif);
                 }
 
@@ -583,7 +583,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
 
                 if (this.correctOrientation) {
                     rotate = getImageOrientation(uri);
-                    // if (rotate != 0) {	// make sure it always gets rotated to correct faulty EXIF metadata.
+                    if (rotate != 0) {
                         Matrix matrix = new Matrix();
                         matrix.setRotate(rotate);
                         try {
@@ -592,7 +592,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
                         } catch (OutOfMemoryError oom) {
                             this.orientationCorrected = false;
                         }
-                    // }
+                    }
                 }
 
                 // If sending base64 image back
@@ -604,7 +604,7 @@ private String ouputModifiedBitmap(Bitmap bitmap, Uri uri) throws IOException {
                 else if (destType == FILE_URI || destType == NATIVE_URI) {
                     // Did we modify the image?
                     if ( (this.targetHeight > 0 && this.targetWidth > 0) ||
-                            (this.correctOrientation && this.orientationCorrected) ) {
+                            (this.correctOrientation/* && this.orientationCorrected*/) ) {	// make sure the bitmap is always written to file.
                         try {
                             String modifiedPath = this.ouputModifiedBitmap(bitmap, uri);
                             // The modified image is cached by the app in order to get around this and not have to delete you
