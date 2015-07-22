@@ -425,7 +425,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
 
             if (this.saveToPhotoAlbum) {
                 //Create a URI on the filesystem so that we can write the file.
-                uri = Uri.fromFile(new File(getPicutresPath()));
+                uri = Uri.fromFile(new File(getPicturesPath()));
             } else {
                 uri = Uri.fromFile(new File(getTempDirectoryPath(), System.currentTimeMillis() + ".jpg"));
             }
@@ -485,7 +485,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         bitmap = null;
     }
 
-private String getPicutresPath()
+private String getPicturesPath()
 {
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     String imageFileName = "IMG_" + timeStamp + ".jpg";
